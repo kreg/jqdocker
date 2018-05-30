@@ -15,7 +15,7 @@ jq-db:
 		--name jq-db \
 		-v ${PWD}:/app \
 		-e ALLOW_EMPTY_PASSWORD=yes \
-		-e MARIADB_DATABASE=tripnscan_stg \
+		-e MARIADB_DATABASE=tripnscan \
 		bitnami/mariadb:latest
 
 
@@ -29,9 +29,8 @@ jq-app: jq-db
 		--link=jq-db \
 		${DEV_ORG}/${APP_IMAGE}:${VERSION}
 
-staging-db:
-	# docker exec -it jq-db sh -c "mysql -u root tripnscan_stg < /app/schema.sql"
-	docker exec -it jq-db sh -c "mysql -u root tripnscan_stg < /app/everything.sql"
+populate-db:
+	docker exec -it jq-db sh -c "mysql -u root tripnscan < /app/dump.sql"
 
 jq-app-bash:
 	docker exec -it jq-app bash
