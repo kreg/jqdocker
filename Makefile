@@ -1,8 +1,9 @@
 DEV_ORG = kmcdaniel-test
 APP_IMAGE = jq-app
-VERSION = $(shell cd JQ-SVR && git rev-parse --short HEAD)
+# VERSION = $(shell cd JQ-SVR && git rev-parse --short HEAD)
+VERSION = latest
 
-all: build jq-app
+all: jq-app
 
 build:
 	@docker build -t ${DEV_ORG}/${APP_IMAGE}:${VERSION} -f Dockerfile .
@@ -44,6 +45,8 @@ jq-app-logs:
 jq-db-logs:
 	docker logs -f jq-db
 
+stop:
+	-docker rm -f jq-app jq-db
+
 clean:
-	-docker stop jq-app jq-db
 	-docker rmi -f ${DEV_ORG}/${APP_IMAGE}:${VERSION}
