@@ -1,4 +1,4 @@
-DEV_ORG = kmcdaniel-test
+DEV_ORG = jqsvr-dev
 APP_IMAGE = app
 # VERSION = $(shell cd JQ-SVR && git rev-parse --short HEAD)
 VERSION = latest
