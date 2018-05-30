@@ -1,51 +1,51 @@
 DEV_ORG = kmcdaniel-test
-APP_IMAGE = jq-app
+APP_IMAGE = app
 # VERSION = $(shell cd JQ-SVR && git rev-parse --short HEAD)
 VERSION = latest
 
-all: jq-app
+all: app
 
 build:
 	@docker build -t ${DEV_ORG}/${APP_IMAGE}:${VERSION} -f Dockerfile .
 
-jq-db:
+mariadb:
 	docker run \
 		--rm \
 		-d \
-		--name jq-db \
+		--name mariadb \
 		-v ${PWD}:/app \
 		-e ALLOW_EMPTY_PASSWORD=yes \
 		-e MARIADB_DATABASE=tripnscan \
 		bitnami/mariadb:latest
 
 
-jq-app: jq-db
+app: mariadb
 	docker run \
 		--rm \
 		-d \
-		--name jq-app \
+		--name app \
 		-v ${PWD}:/app \
 		-p 8000:8000 \
-		--link=jq-db \
+		--link=mariadb \
 		${DEV_ORG}/${APP_IMAGE}:${VERSION}
 
 populate-db:
-	docker exec -it jq-db sh -c "mysql -u root tripnscan < /app/dump.sql"
+	docker exec -it mariadb sh -c "mysql -u root tripnscan < /app/dump.sql"
 
-jq-app-bash:
-	docker exec -it jq-app bash
+app-bash:
+	docker exec -it app bash
 
-jq-db-bash:
-	docker exec -it jq-db bash
+mariadb-bash:
+	docker exec -it mariadb bash
 
-jq-app-logs:
-	docker logs -f jq-app
+app-logs:
+	docker logs -f app
 
-jq-db-logs:
-	docker logs -f jq-db
+mariadb-logs:
+	docker logs -f mariadb
 
 stop:
-	-docker rm -f jq-app jq-db
+	-docker rm -f app mariadb
 
 clean:
 	-docker rmi -f ${DEV_ORG}/${APP_IMAGE}:${VERSION}

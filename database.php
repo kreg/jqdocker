@@ -6,7 +6,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'jq-db',
+	'hostname' => 'mariadb',
 	'username' => 'root',
 	'database' => 'tripnscan',
 	'dbdriver' => 'mysqli',
