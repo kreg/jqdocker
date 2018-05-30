@@ -29,7 +29,8 @@ jq-app: jq-db
 		${DEV_ORG}/${APP_IMAGE}:${VERSION}
 
 staging-db:
-	docker exec -it jq-db sh -c "mysql -u root tripnscan_stg < /app/schema.sql"
+	# docker exec -it jq-db sh -c "mysql -u root tripnscan_stg < /app/schema.sql"
+	docker exec -it jq-db sh -c "mysql -u root tripnscan_stg < /app/everything.sql"
 
 jq-app-bash:
 	docker exec -it jq-app bash
