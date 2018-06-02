@@ -14,6 +14,7 @@ mariadb:
 		-d \
 		--name mariadb \
 		-v ${PWD}:/app \
+		-v ${PWD}/mariadb-persistence:/bitnami \
 		-e ALLOW_EMPTY_PASSWORD=yes \
 		-e MARIADB_DATABASE=tripnscan \
 		bitnami/mariadb:latest

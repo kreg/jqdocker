@@ -8,7 +8,8 @@
 * `make mariadb-logs` to watch the logs from mariadb. Ctrl-C to exit.
 * `make app-logs` to watch the logs from the app. Ctrl-C to exit.
 * Once the mariadb logs show the "Starting mysqld daemon with databases from /opt/bitnami/mariadb/data" line, you can load the database.
-* `make populate-db` to populate the database.
+* `make populate-db` to populate the database (only if you haven't previously done that).
 * Confirm everything running normally.
 * `make stop` to shut everything down.
+* `rm -rf rm -rf mariadb-persistence` if you want to delete the database.
 * `make clean` if you want to remove docker image.
